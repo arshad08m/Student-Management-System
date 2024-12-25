@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Student</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 100px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        h1 {
+            color: #dc3545;
+        }
+        p {
+            margin: 20px 0;
+            font-size: 18px;
+        }
+        .btn {
+            padding: 10px 20px;
+            margin: 10px;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .btn.confirm {
+            background-color: #dc3545;
+        }
+        .btn.cancel {
+            background-color: #6c757d;
+        }
+        .btn:hover {
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Confirm Deletion</h1>
+        <p>Are you sure you want to delete the student <strong>{{ student[1] }}</strong>?</p>
+        <a href="/delete/{{ student[0] }}/confirm" class="btn confirm">Yes, Delete</a>
+        <a href="/" class="btn cancel">Cancel</a>
+    </div>
+</body>
+</html>
