@@ -14,15 +14,15 @@ login_manager.login_view = 'login'
 def get_db_connection():
     try:
         db = mysql.connector.connect(
-            host="localhost",
-            user="root",
-            password="Sanya@0622",
-            database="student_management_personal",
-            port=os.getenv("DB_PORT", 3306)  # Use 3306 as default if DB_PORT is not set
+            host=os.getenv("DB_HOST"),
+            user=os.getenv("DB_USER"),
+            password=os.getenv("DB_PASSWORD"),
+            database=os.getenv("DB_NAME"),
+            port=int(os.getenv("DB_PORT", 3306))  # Use 3306 as default
         )
         return db
     except mysql.connector.Error as err:
-        print(f"Error: {err}")
+        print(f"Database connection error: {err}")
         return None
 
 # User class for Flask-Login
