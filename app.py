@@ -3,6 +3,8 @@ from flask import Flask, get_flashed_messages, render_template, request, redirec
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 import mysql.connector
 from urllib.parse import urlparse
+from dotenv import load_dotenv
+load_dotenv()
 
 app = Flask(__name__)
 app.secret_key = "abc@0622"  
