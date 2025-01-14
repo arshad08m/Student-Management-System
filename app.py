@@ -2,7 +2,7 @@ import os
 from flask import Flask, get_flashed_messages, render_template, request, redirect, flash, session, url_for
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 import mysql.connector
-from mysql.connector.errors import IntegrityError
+from urllib.parse import urlparse
 
 app = Flask(__name__)
 app.secret_key = "abc@0622"  
@@ -11,18 +11,28 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
 
+# Database connection function using DATABASE_URL
 def get_db_connection():
     try:
-        db = mysql.connector.connect(
-            host=os.getenv("DB_HOST"),
-            user=os.getenv("DB_USER"),
-            password=os.getenv("DB_PASSWORD"),
-            database=os.getenv("DB_NAME"),
-            port=int(os.getenv("DB_PORT", 3306))  # Use 3306 as default
-        )
+        db_url = os.getenv("DATABASE_URL")  # Get the database URL from environment variables
+        if not db_url:
+            raise ValueError("DATABASE_URL is not set")
+
+        # Parse the DATABASE_URL
+        parsed_url = urlparse(db_url)
+        db_config = {
+            "host": parsed_url.hostname,
+            "user": parsed_url.username,
+            "password": parsed_url.password,
+            "database": parsed_url.path[1:],  # Remove leading slash
+            "port": parsed_url.port or 3306  # Default MySQL port
+        }
+
+        # Connect to the database
+        db = mysql.connector.connect(**db_config)
         return db
-    except mysql.connector.Error as err:
-        print(f"Database connection error: {err}")
+    except Exception as e:
+        print(f"Database connection error: {e}")
         return None
 
 # User class for Flask-Login
