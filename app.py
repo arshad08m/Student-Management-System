@@ -18,7 +18,7 @@ def get_db_connection():
         db = mysql.connector.connect(
             host="localhost",
             user="root",
-            password="Sanya@0622",
+            password="",
             database="student_management_personal",
             port=os.getenv("DB_PORT", 3306)  # Use 3306 as default if DB_PORT is not set
         )
